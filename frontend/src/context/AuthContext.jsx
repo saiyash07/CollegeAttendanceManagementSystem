@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       setLoading(false);
       return;
@@ -22,13 +22,13 @@ export function AuthProvider({ children }) {
         setStudent(res.data.student);
       })
       .catch(() => {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
       })
       .finally(() => setLoading(false));
   }, []);
 
   const applySession = (data) => {
-    localStorage.setItem('token', data.token);
+    sessionStorage.setItem('token', data.token);
     setUser(data.user);
     setStudent(data.student);
   };
@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     setUser(null);
     setStudent(null);
   };
